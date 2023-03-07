@@ -24,17 +24,20 @@ const CategoryScreen = () => {
         category => category.name && category.name.toLowerCase().includes(filterText.toLowerCase)
     );
 
-    useEffect(async()=>{
+    const getCategories = async () =>{
         try {
             setIsLoading(true)
-            const data = await AxiosClient({url: '/category'})
+            const data = await AxiosClient({url: '/category/'})
             if (!data.error) setCategories(data.data)
 
         } catch (error) {
             //poner alerta de error
-        } finally {
             setIsLoading(false)
         }
+    };
+
+    useEffect(()=>{
+        getCategories();
     }, []);
 
     const headerComponent = React.useMemo(() => {
